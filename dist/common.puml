@@ -21,11 +21,10 @@
 skinparam component {
     BackgroundColor #FBE014
     BorderColor #F7A31C
-}
-
-skinparam interface {
-    BackgroundColor #FBE014
-    BorderColor #F7A31C
+    skinparam interface {
+        BackgroundColor #FBE014
+        BorderColor #F7A31C
+    }
 }
 
 hide stereotype
