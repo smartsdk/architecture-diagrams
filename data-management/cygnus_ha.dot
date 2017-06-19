@@ -1,0 +1,20 @@
+digraph Cluster {
+    rankdir=LR;
+    compound=true;
+    node [shape="record" style="filled"];
+    splines=line;
+    Orion [fillcolor="aliceblue"];
+    "Load Balancer" [fillcolor="aliceblue"];
+    "Agent 1" [fillcolor="aliceblue"];
+    "Agent 2" [fillcolor="aliceblue"];
+    "HDFS" [shape="oval" fillcolor="aliceblue"];
+    "MySQL" [shape="oval" fillcolor="aliceblue"];
+
+    "Orion" -> "Load Balancer";
+    "Load Balancer" -> "Agent 1";
+    "Load Balancer" -> "Agent 2";
+    "Agent 1" -> "HDFS";
+    "Agent 2" -> "HDFS";
+    "Agent 1" -> "MySQL";
+    "Agent 2" -> "MySQL";
+}

@@ -1,0 +1,35 @@
+@startuml;
+skinparam componentStyle uml2
+
+package "Data/Context Management Core" {
+	interface NGSI
+	NGSI -left- [Context Broker \n - Orion]
+	NGSI -up- [CEP \n - Proton]
+	NGSI -up- [CKAN]
+	NGSI -up- [Stream Oriented \n- Kurento]
+	package "Cosmos" {
+		NGSI -up- [Cygnus]
+		[Cygnus] -up- [Big Data Analysis]
+		[Cygnus] -up- [STH Comet]
+	}
+}
+
+package "IoT Service Enablement" {
+	package "IoT Backend" {
+		NGSI -down- [Backend Device \n Management - IDAS]
+		NGSI -down- [IoT Discovery]
+		NGSI -down- [IoT Broker]
+	}
+	package "IoT Edge" {
+		NGSI -right- [IoT Data Edge \n Consolidation GE - Cepheus]
+	}
+}
+
+interface MQTT
+interface IETFCoAP
+[IoT Device 1] -up- MQTT
+MQTT -up- [Backend Device \n Management - IDAS]
+[IoT Device 2] -up- IETFCoAP
+IETFCoAP -up- [Backend Device \n Management - IDAS]
+
+@enduml

@@ -1,0 +1,16 @@
+digraph G {
+  rankdir=LR;
+  compound=true;
+  node [shape="record" style="filled" fillcolor="aliceblue"];
+  splines=line;
+  Device;
+  MQTTBroker;
+  subgraph cluster {
+      label="IoT Agent";
+      IoTAgent -> MongoDB;
+  }
+  ContextBroker [fillcolor="aliceblue"];
+  Device -> MQTTBroker [dir="both"];
+  MQTTBroker -> IoTAgent [dir="both"];
+  IoTAgent -> ContextBroker [dir="both"];
+}

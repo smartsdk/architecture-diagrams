@@ -1,0 +1,18 @@
+digraph G {
+    rankdir=LR;
+      compound=true;
+      node [shape="record" style="filled"];
+      splines=line;
+      Client [fillcolor="aliceblue"];
+      "Load Balancer" [fillcolor="aliceblue"];
+      subgraph cluster_0 {
+          label="Orion Context Broker stack";
+          Orion1 [fillcolor="aliceblue"];
+          Orion2 [fillcolor="aliceblue"];
+          Orion3 [fillcolor="aliceblue"];
+      }
+      Client -> "Load Balancer" [lhead=cluster_0];
+      "Load Balancer" -> Orion1;
+      "Load Balancer" -> Orion2;
+      "Load Balancer" -> Orion3;
+}

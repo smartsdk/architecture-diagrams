@@ -1,0 +1,20 @@
+@startuml
+skinparam componentStyle uml2
+
+package "IoT Service Enablement" {
+
+interface NGSI
+
+package "IoT Backend" {
+  NGSI -up- [Backend Device Management \n- IDAS]
+  NGSI -up- [IoT Discovery]
+  NGSI -up- [IoT Broker]
+}
+package "IoT Edge" {
+
+ NGSI -down- [IoT Data Edge Consolidation GE - Cepheus]
+
+}
+}
+
+@enduml
