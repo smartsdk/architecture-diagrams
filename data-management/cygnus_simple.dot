@@ -1,0 +1,19 @@
+digraph Cluster {
+    rankdir=LR;
+    compound=true;
+    node [shape="record" style="filled"];
+    splines=line;
+    Orion [fillcolor="aliceblue"];
+    subgraph cluster {
+        label="Cygnus Agent";
+        node [style="filled"];
+        "Http Source" [shape="oval" fillcolor="aliceblue"];
+        "Memory Channel" [fillcolor="aliceblue"];
+        "OrionHDFSink" [shape="oval" fillcolor="aliceblue"];
+    }
+    "HDFS"[fillcolor="aliceblue"];
+    "Orion" -> "Http Source";
+    "Http Source" -> "Memory Channel"[label="Flume event"];
+    "Memory Channel" -> "OrionHDFSink"[label="Flume event"];
+    "OrionHDFSink" -> "HDFS";
+}

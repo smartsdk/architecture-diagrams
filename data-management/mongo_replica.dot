@@ -1,0 +1,31 @@
+digraph Cluster {
+    rankdir=LR;
+       compound=true;
+       node [shape="record" style="filled"];
+       splines=line;
+       subgraph cluster {
+            label="Docker Swarm";
+            style=filled;
+            color=aliceblue;
+            subgraph cluster_1 {
+                label="Node";
+                color=white;
+                Mongo2 [fillcolor="aliceblue"];
+            }
+            subgraph cluster_0 {
+                label="Node";
+                color=white;
+                Controller [fillcolor="aliceblue"];
+                Mongo1 [fillcolor="aliceblue"];
+            }
+            subgraph cluster_2 {
+                label="Node";
+                color=white;
+                Mongo3 [fillcolor="aliceblue"];
+            }
+       }
+    Mongo1 -> Mongo2 [dir="both"];
+    Mongo2 -> Mongo3 [dir="both"];
+    Mongo3 -> Mongo1 [dir="both"];
+    Controller -> Mongo1;
+}

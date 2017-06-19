@@ -1,0 +1,30 @@
+digraph G {
+  rankdir=LR;
+      compound=true;
+      node [shape="record" style="filled"];
+      splines=line;
+      Device [fillcolor="aliceblue"];
+      MQTTBroker [fillcolor="aliceblue"];
+      "Load Balancer" [fillcolor="aliceblue"];
+      subgraph cluster_0 {
+          label="IoT Agent stack";
+          IoTAgent1 [fillcolor="aliceblue"];
+          IoTAgent2 [fillcolor="aliceblue"];
+          IoTAgent3 [fillcolor="aliceblue"];
+      }
+      subgraph cluster_1 {
+          label="MongoDB Replica Set stack";
+          Mongo1 [fillcolor="aliceblue"];
+          Mongo2 [fillcolor="aliceblue"];
+          Mongo3 [fillcolor="aliceblue"];
+      }
+      ContextBroker [fillcolor="aliceblue"];
+      "Load Balancer" -> {IoTAgent1,IoTAgent2,IoTAgent3};
+      IoTAgent1 -> Mongo1 [lhead=cluster_1];
+      IoTAgent2 -> Mongo1 [lhead=cluster_1];
+      IoTAgent3 -> Mongo1 [lhead=cluster_1];
+      Mongo1 -> {Mongo2, Mongo3} [dir="both"];
+      Device -> MQTTBroker [dir="both"];
+      MQTTBroker -> "Load Balancer" [lhead=cluster_0];
+      IoTAgent1 -> ContextBroker [ltail=cluster_0];
+}

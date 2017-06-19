@@ -1,0 +1,19 @@
+digraph Cluster {
+    rankdir=LR;
+    compound=true;
+    node [shape="record" style="filled"];
+    splines=line;
+    Orion [fillcolor="aliceblue"];
+    "Load Balancer" [fillcolor="aliceblue"];
+    Comet1 [fillcolor="aliceblue"];
+    Comet2 [fillcolor="aliceblue"];
+    Comet3 [fillcolor="aliceblue"];
+    "Database" [fillcolor="aliceblue"];
+    "Orion" -> "Load Balancer" [label="NGSI Notifications"];
+    "Orion" -> "Load Balancer";
+    "Orion" -> "Load Balancer";
+    "Load Balancer" -> {Comet1,Comet2,Comet3};
+    "Comet2" -> "Database";
+    "Comet1" -> "Database";
+    "Comet3" -> "Database";
+}

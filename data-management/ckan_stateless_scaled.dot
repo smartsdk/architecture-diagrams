@@ -1,0 +1,26 @@
+digraph Cluster {
+    rankdir=LR;
+    compound=true;
+    node [shape="record" style="filled"];
+    splines=line;
+
+    Client [fillcolor="aliceblue"];
+    "CKAN LB"[fillcolor="aliceblue"];
+    "CKAN 1"[fillcolor="aliceblue"];
+    "CKAN 2"[fillcolor="aliceblue"];
+    "CKAN 3"[fillcolor="aliceblue"];
+    "Datapusher LB"[fillcolor="aliceblue"];
+    "Datapusher 1" [fillcolor="aliceblue"];
+    "Datapusher 2" [fillcolor="aliceblue"];
+    "Datapusher 3" [fillcolor="aliceblue"];
+    "Solr" [fillcolor="aliceblue"];
+    "PostgreSQL" [fillcolor="aliceblue"];
+
+    "Client" -> "CKAN LB";
+    "Client" -> "Datapusher LB";
+    "CKAN LB" -> {"CKAN 1","CKAN 2","CKAN 3"};
+    "CKAN 1" -> {"Solr", "PostgreSQL"};
+    "CKAN 2" -> {"Solr", "PostgreSQL"};
+    "CKAN 3" -> {"Solr", "PostgreSQL"};
+    "Datapusher LB" -> {"Datapusher 1", "Datapusher 2","Datapusher 3"};
+}
