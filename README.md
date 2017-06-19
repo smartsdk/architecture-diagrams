@@ -62,22 +62,4 @@ package "Data/Context Management Core" {;
 ```
 Here is an example of resulting graph:
 
-![Alt text](https://g.gravizo.com/svg?
-  @startuml;
-  skinparam componentStyle uml2;
-
-  package "Data/Context Management Core" {;
-  	interface NGSI;
-  	NGSI -left- [Context Broker \n - Orion];
-  	NGSI -up- [CEP \n - Proton];
-
-  	NGSI -up- [CKAN];
-  	NGSI -up- [Stream Oriented \n- Kurento];
-  	package "Cosmos" {;
-  		NGSI -up- [Cygnus];
-  		[Cygnus] -up- [Big Data Analysis];
-  		[Cygnus] -up- [STH Comet];
-  	};
-  };
-  @enduml
-)
+![Alt text](https://g.gravizo.com/svg?@startuml;skinparam componentStyle uml2;package "Data/Context Management Core" {;interface NGSI;NGSI -left- [Context Broker \n - Orion];NGSI -up- [CEP \n - Proton];NGSI -up- [CKAN];NGSI -up- [Stream Oriented \n- Kurento];package "Cosmos" {;NGSI -up- [Cygnus];[Cygnus] -up- [Big Data Analysis];[Cygnus] -up- [STH Comet];};};@enduml;)
