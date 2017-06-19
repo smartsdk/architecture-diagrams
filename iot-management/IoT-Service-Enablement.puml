@@ -1,10 +1,11 @@
 @startuml
 skinparam componentStyle uml2
 
-!define ICONURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/smartsdk-template/dist
+!define ICONURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master/dist
 !includeurl ICONURL/common.puml
 !includeurl ICONURL/fiware.puml
 !includeurl ICONURL/smartsdk.puml
+
 
 interface NGSI
 
@@ -22,5 +23,12 @@ package "IoT Edge" {
   FIWARE(iote,"IoT Data Edge \n Consolidation GE - Cepheus",component)
   NGSI -right- iote
 }
+
+interface MQTT
+interface IETFCoAP
+[IoT Device 1] -up- MQTT
+MQTT -up- idas
+[IoT Device 2] -up- IETFCoAP
+IETFCoAP -up- idas
 
 @enduml
