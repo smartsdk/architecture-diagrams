@@ -25,6 +25,7 @@ skinparam component {
         BackgroundColor #FBE014
         BorderColor #F7A31C
     }
+    ArrowColor #F7A31C
 }
 
 hide stereotype
