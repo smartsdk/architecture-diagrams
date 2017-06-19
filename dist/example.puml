@@ -1,0 +1,42 @@
+@startuml;
+
+!include common.puml
+!include fiware.puml
+!include smartsdk.puml
+
+skinparam componentStyle uml2
+
+package "Data/Context Management Core" {
+	interface NGSI
+  FIWARE(ctx,"Context Broker \n - Orion",component)
+	NGSI -left- ctx
+	NGSI -up- [CEP \n - Proton]
+	NGSI -up- [CKAN]
+	NGSI -up- [Stream Oriented \n- Kurento]
+	package "Cosmos" {
+    SMARTSDK(cygnus,"Cygnus",component)
+		NGSI -up- cygnus
+		cygnus -up- [Big Data Analysis]
+		cygnus -up- [STH Comet]
+	}
+}
+
+package "IoT Service Enablement" {
+	package "IoT Backend" {
+		NGSI -down- [Backend Device \n Management - IDAS]
+		NGSI -down- [IoT Discovery]
+		NGSI -down- [IoT Broker]
+	}
+	package "IoT Edge" {
+		NGSI -right- [IoT Data Edge \n Consolidation GE - Cepheus]
+	}
+}
+
+interface MQTT
+interface IETFCoAP
+[IoT Device 1] -up- MQTT
+MQTT -up- [Backend Device \n Management - IDAS]
+[IoT Device 2] -up- IETFCoAP
+IETFCoAP -up- [Backend Device \n Management - IDAS]
+
+@enduml

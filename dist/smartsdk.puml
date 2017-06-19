@@ -1,0 +1,23 @@
+@startuml
+sprite $smartsdk [72x72/16z] {
+xPV9akCW343HXcrC_lztHmjWl6IgkwgFrY416JqB8OaafLTUUUMLtmfjUrKfgqqm5v_LkcySpxdul8YEeJqjMUtsGsnPxNAQT4rQncnJs-aPdnVE4pnZQZch
+JfoTJa_0L7sBeXDnjBwx-FEcSXuwnnRQxg3v7wPGnz1DzzGvx9RYdx7ku7Ij7COUk6MCo-2O3N_Xh7TE2r1kdEs18wmoE2AIw-JNEFWrIF2LqmNdEEEDerdH
+WlvppWRfpcddYTyukMqbE4JxEE8hnuyrV-DSusowzPcJ_-VFxRn6haoSCYNbJpaOkVxCuL_aZndHcODUxhldprgAPMJnBonbHwtsillPg19T5naRAwdFfqXh
+hj5JNrcsRNtIivwYt2pGjCBtvKS7EGiy6o2P5k2g5sySURbxepOQE86pX-5Wm0PRTs-UW7bLIZxx7eNXqbuP7Y8Yp-feALwbhJYwKoH3OkXl1Z3pO9Xh3DXU
+kre1U6sp3lT2hQX0em11KtDTpRR1jiEJWs2fKOxIMrjZs69NC3RdGx8lzOPKcf_iGunIsPQSMrCfIrwskle3OBa87YT84UAc3HSttvAbwLQyiwS8UbZevdHt
+xUmP9VJKjyJ-gIU44UdHSUsWjTc1hu0M3lPOe0USVCHavsM7ZXweA5bjfmkXbBg0-mVk2qLGk3dF_U2WfpdsF8qybjvrhSGucY_8P44Zu7IajuUBz1bqJbnI
+nGj-hv_FmJcIpAqxfyS7dKW7fpVYvLDroqKvABC5Qu2pntSS7aJK86UPEBuvjhw2dF9dujWhRM6c93E7R8bYflZqQw9-9AsVckJ2yG28P_QLesK2ZnnBWKSE
+97xYf9u_F-L4JLquWjvKld3oipyftJaUy6VEhhdqmCd6oXTEpfaZsM-SWcXZk7C4e-FCyK68Dj1_FGnEJlI9Li8tJilZSvovjO4ezy61lVt6wANJE7HS6dXm
+cFDnbL0Pd5NJHowt2mUGfqvF8yxdYqJsuDHFlTnXr3bmlKUc_9b9mIaFzw1nu7wleSNuuRxBc0g-VrTUUUMLFvT_
+}
+
+
+!define SMARTSDK(_alias) ENTITY(rectangle,black,smartsdk{scale=0.4},_alias,SMARTSDK)
+!define SMARTSDK(_alias,_label) ENTITY(rectangle,black,smartsdk{scale=0.4},_label,_alias,SMARTSDK)
+!define SMARTSDK(_alias,_label,_shape) ENTITY(_shape,black,smartsdk{scale=0.4},_label,_alias,SMARTSDK)
+!define SMARTSDK(_alias,_label,_shape,_color) ENTITY(_shape,_color,smartsdk{scale=0.4},_label,_alias,SMARTSDK)
+skinparam component {
+    BackgroundColor<<SMARTSDK>> #98A8B2
+    BorderColor<<SMARTSDK>> #3F525D
+}
+@enduml
