@@ -37,10 +37,10 @@ package "Data/Context Management Core" {
 @enduml
 ```
 
-To render them using gravizo, it is simple as embedding the code in gravizo path (be careful with the usage of ''):
+To render them using gravizo, it is simple as embedding the code in gravizo path:
 
 ```
-<img src='https://g.gravizo.com/svg?
+https://g.gravizo.com/svg?
 @startuml;
 skinparam componentStyle uml2;
 
@@ -59,26 +59,25 @@ package "Data/Context Management Core" {;
 };
 
 @enduml
-'>
 ```
 Here is an example of resulting graph:
-<img src='https://g.gravizo.com/svg?
-@startuml;
-skinparam componentStyle uml2;
 
-package "Data/Context Management Core" {;
-	interface NGSI;
-	NGSI -left- [Context Broker \n - Orion];
-	NGSI -up- [CEP \n - Proton];
+![Alt text](https://g.gravizo.com/svg?
+  @startuml;
+  skinparam componentStyle uml2;
 
-	NGSI -up- [CKAN];
-	NGSI -up- [Stream Oriented \n- Kurento];
-	package "Cosmos" {;
-		NGSI -up- [Cygnus];
-		[Cygnus] -up- [Big Data Analysis];
-		[Cygnus] -up- [STH Comet];
-	};
-};
+  package "Data/Context Management Core" {;
+  	interface NGSI;
+  	NGSI -left- [Context Broker \n - Orion];
+  	NGSI -up- [CEP \n - Proton];
 
-@enduml
-'>
+  	NGSI -up- [CKAN];
+  	NGSI -up- [Stream Oriented \n- Kurento];
+  	package "Cosmos" {;
+  		NGSI -up- [Cygnus];
+  		[Cygnus] -up- [Big Data Analysis];
+  		[Cygnus] -up- [STH Comet];
+  	};
+  };
+  @enduml
+)
