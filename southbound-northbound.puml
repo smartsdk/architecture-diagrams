@@ -1,51 +1,13 @@
 @startuml;
 skinparam componentStyle uml2
 
-!define ICONURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/smartsdk-template/dist
+!define ICONURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master/dist
 !includeurl ICONURL/common.puml
 !includeurl ICONURL/fiware.puml
 !includeurl ICONURL/smartsdk.puml
 
-package "Data/Context Management Core" {
-	interface NGSI
-	FIWARE(ctx,"Context Broker \n - Orion",component)
-	FIWARE(cep,"CEP \n - Proton",component)
-	FIWARE(ckan,"CKAN",component)
-	FIWARE(kurento,"Stream Oriented \n- Kurento",component)
-	NGSI -left- ctx
-	NGSI -up- cep
-	NGSI -up- ckan
-	NGSI -up- ctx
-	package "Cosmos" {
-		FIWARE(cygnus,"Cygnus",component)
-		FIWARE(bda,"Big Data Analysis",component)
-		FIWARE(sth,"STH Comet",component)
-		NGSI -up- cygnus
-		cygnus -up- bda
-		cygnus -up- sth
-	}
-}
-
-package "IoT Service Enablement" {
-	package "IoT Backend" {
-		FIWARE(idas,"Backend Device \n Management - IDAS",component)
-		FIWARE(iotd,"IoT Discovery",component)
-		FIWARE(ckan,"IoT Broker",component)
-		NGSI -down- idas
-		NGSI -down- iotd
-		NGSI -down- iotb
-	}
-	package "IoT Edge" {
-		FIWARE(iote,"IoT Data Edge \n Consolidation GE - Cepheus",component)
-		NGSI -right- iote
-	}
-}
-
-interface MQTT
-interface IETFCoAP
-[IoT Device 1] -up- MQTT
-MQTT -up- idas
-[IoT Device 2] -up- IETFCoAP
-IETFCoAP -up- idas
+!define BASEURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master
+!includeurl BASEURL/data-management/Data-ContextManagement.puml
+!includeurl BASEURL/iot-management/IoT-Service-Enablement.puml
 
 @enduml
