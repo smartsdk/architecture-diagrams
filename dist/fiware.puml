@@ -1,0 +1,22 @@
+@startuml
+sprite $fiware [72x72/16z] {
+xPVN6gGW34ODlUhxl-qcW11iu-pTVZkvcA9m-5E8k2m_-zb_PI24R2O4_1r3IAKKJY_MQTz2b5OI03gWIaAsX6yW6eU3H9WWc91LbyI_GgbteeHM2WYcD4uW
+M3DYqZKS06yfii7mItTha6N1kBtJKgQKhzaKGb0NYNtACYukorTPJnuf4qZ3Ep6Bki1Ga1RGoBW7gR8OHaO_O3I51uNInwLhk8ZUdH4tJbMZiUJtPR0vHhR_
+DmP5An1Dd4DJfulct8CSNQg2DAkJPw8cOX7MEbSMiTOQS-TN6Ly-nT4fGxUNkAvRB7AsRLjJzCwQYyGtpg9dGM1SoEILMNFEvPR27yX4o-70WkProV2K-u0p
+BF4IpawmSweHB7axoI60hYN2KcPHHN76qBnG0vQv8IewqwE33dNES4pIo78xq2_VD0v1QqLbRvfN9RijJ7fubPkSgi4pUaTL1v44hV9B8KuSJMFiY4berqq-
+sHf5RtErvlK8TAGHOinCqmBSaXwbNtMemIaYOert7Tup83odnEOJROVc5kUKiOvp72jpusFA2UlHzCA5c6oR3Zr_jMIocI8oxs9iyxpMHCJKkReVA4wAkLMp
+tcilFJHnLTRTt9IsxejYsYWKTo1mNBAetP6LcsAnAegkdmPcNqZjSdgO8_EBrvuxTwXEQSD5QxBC5RiS155Tizu2qenziaSXMjtxJ-FiDTmZrE94xSTQ7_Zb
+tMU_PQlqFB5dIEPFvg4dQCjTyYwWxpQP7YdxrgYRPWlTyzWy6E4C3nYxwswbPleqdm-2M7QFMZfbnmGswQA6mSGpnAlJ93wdzyym5GlcUQXAmKxd7JVbVpdq
+JtTvFAG3udnPxcBDT7bqA_Vgi6Pxp0ytHYp2vyEQJdSOzgIQidP96MkQyrt7GE7-j2Pu5YyNZ7CR5fSdjN2nnOxTwL1uc6Rs2W1IkxcU_AtaSmMd6BnpteTu
+l9SU3geGybkpyAuiFdIDZsy4yeKaz-gzGZsJhXDvhSdTTR5evNUlVyg58ui_bBzYIMqmusWEps3oBrycV_QpVzN-0000
+}
+
+!define FIWARE(_alias) ENTITY(rectangle,black,fiware{scale=0.4},_alias,FIWARE)
+!define FIWARE(_alias,_label) ENTITY(rectangle,black,fiware{scale=0.4},_label,_alias,FIWARE)
+!define FIWARE(_alias,_label,_shape) ENTITY(_shape,black,fiware{scale=0.4},_label,_alias,FIWARE)
+!define FIWARE(_alias,_label,_shape,_color) ENTITY(_shape,_color,fiware{scale=0.4},_label,_alias,FIWARE)
+skinparam component {
+    BackgroundColor<<FIWARE>> #48B9C9
+    BorderColor<<FIWARE>> #005359
+}
+@enduml
