@@ -1,20 +1,26 @@
 @startuml
 skinparam componentStyle uml2
 
-package "IoT Service Enablement" {
+!define ICONURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/smartsdk-template/dist
+!includeurl ICONURL/common.puml
+!includeurl ICONURL/fiware.puml
+!includeurl ICONURL/smartsdk.puml
 
 interface NGSI
 
+package "IoT Service Enablement" {
+
 package "IoT Backend" {
-  NGSI -up- [Backend Device Management \n- IDAS]
-  NGSI -up- [IoT Discovery]
-  NGSI -up- [IoT Broker]
+  FIWARE(idas,"Backend Device \n Management - IDAS",component)
+  FIWARE(iotd,"IoT Discovery",component)
+  FIWARE(iotb,"IoT Broker",component)
+  NGSI -down- idas
+  NGSI -down- iotd
+  NGSI -down- iotb
 }
 package "IoT Edge" {
-
- NGSI -down- [IoT Data Edge Consolidation GE - Cepheus]
-
-}
+  FIWARE(iote,"IoT Data Edge \n Consolidation GE - Cepheus",component)
+  NGSI -right- iote
 }
 
 @enduml

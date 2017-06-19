@@ -1,0 +1,4 @@
+*.png
+!dist/fiware-icon.png
+!dist/smartsdk-icon.png
+
