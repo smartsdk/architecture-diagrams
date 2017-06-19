@@ -1,0 +1,17 @@
+@startuml;
+skinparam componentStyle uml2
+
+!define BASEURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master
+!includeurl BASEURL/data-management/Data-ContextManagement.puml
+
+package "Data/Context Management SmartSDK Add-Ons" {
+	interface NGSI
+	SMARTSDK(timeseries,"NGSI Timeseries - QuantumLeap",component)
+	SMARTSDK(encryption,"NGSI Encryption Layer",component)
+	SMARTSDK(sdk,"SDK Library for NGSI",component)
+	NGSI -left- timeseries
+	NGSI -left- encryption
+	NGSI -left- sdk
+}
+
+@enduml
