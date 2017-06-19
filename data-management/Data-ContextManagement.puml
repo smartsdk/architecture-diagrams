@@ -1,0 +1,29 @@
+@startuml;
+skinparam componentStyle uml2
+
+!define ICONURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/smartsdk-template/dist
+!includeurl ICONURL/common.puml
+!includeurl ICONURL/fiware.puml
+!includeurl ICONURL/smartsdk.puml
+
+package "Data/Context Management Core" {
+	interface NGSI
+	FIWARE(ctx,"Context Broker \n - Orion",component)
+	FIWARE(cep,"CEP \n - Proton",component)
+	FIWARE(ckan,"CKAN",component)
+	FIWARE(kurento,"Stream Oriented \n- Kurento",component)
+	NGSI -left- ctx
+	NGSI -up- cep
+	NGSI -up- ckan
+	NGSI -up- kurento
+	package "Cosmos" {
+		FIWARE(cygnus,"Cygnus",component)
+		FIWARE(bda,"Big Data Analysis",component)
+		FIWARE(sth,"STH Comet",component)
+		NGSI -up- cygnus
+		cygnus -up- bda
+		cygnus -up- sth
+	}
+}
+
+@enduml
