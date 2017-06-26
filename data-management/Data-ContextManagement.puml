@@ -6,7 +6,7 @@ skinparam componentStyle uml2
 !includeurl ICONURL/fiware.puml
 !includeurl ICONURL/smartsdk.puml
 
-package "Data/Context Management Core" {
+package "Data/Context Management Core" as ctxcore {
 	interface NGSI
 	FIWARE(ctx,"Context Broker \n - Orion",component)
 	FIWARE(cep,"CEP \n - Proton",component)
