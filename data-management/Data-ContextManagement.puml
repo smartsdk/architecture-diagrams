@@ -16,7 +16,7 @@ package "Data/Context Management Core" as ctxcore {
 	NGSI -up- cep
 	NGSI -up- ckan
 	NGSI -up- kurento
-	package "Cosmos" {
+	package "Cosmos" as cosmos {
 		FIWARE(cygnus,"Cygnus",component)
 		FIWARE(bda,"Big Data Analysis",component)
 		FIWARE(sth,"STH Comet",component)
