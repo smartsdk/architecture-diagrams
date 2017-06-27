@@ -1,0 +1,47 @@
+@startuml;
+skinparam componentStyle uml2
+
+!define ICONURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master/dist
+!includeurl ICONURL/common.puml
+!includeurl ICONURL/fiware.puml
+!includeurl ICONURL/smartsdk.puml
+
+package "Map Services" as mapservices {
+	SMARTSDK(mapengine,"Map Engine",component)
+}
+
+[Humidity Sensor] as hu1
+[Temperature Sensor] as temp1
+[GPS Sensor] as gps1
+
+[Humidity and Temperature Sensor] as hutemp2
+[GPS Sensor] as gps2
+
+!define BASEURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master
+!includeurl BASEURL/data-management/Data-ContextManagement-SmartSDK-extension.puml
+!includeurl BASEURL/iot-management/IoT-Service-Enablement-SmartSDK-extension.puml
+
+hide encryption
+hide cep
+hide ckan
+hide kurento
+hide bda
+hide proximithings
+hide iotd
+hide iotb
+hide iot1
+hide iot2
+hide iotedge
+hide IETFCoAP
+
+
+mapengine -down- NGSI
+
+cloudino -down- hu1
+cloudino -down- temp1
+cloudino -down- gps1
+
+smartspot -down- hutemp2
+smartspot -down- gps2
+
+@enduml

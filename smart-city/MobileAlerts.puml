@@ -1,0 +1,35 @@
+@startuml;
+skinparam componentStyle uml2
+
+!define ICONURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master/dist
+!includeurl ICONURL/common.puml
+!includeurl ICONURL/fiware.puml
+!includeurl ICONURL/smartsdk.puml
+
+package "Mobile Alerts" as mobilealerts {
+	SMARTSDK(alert,"Alert Application",component)
+}
+
+[Location] as location
+[Acceleration] as acceleration
+[Heading] as heading
+
+!define BASEURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master
+!includeurl BASEURL/data-management/Data-ContextManagement-SmartSDK-extension.puml
+!includeurl BASEURL/iot-management/IoT-Service-Enablement-SmartSDK-extension.puml
+
+alert -down- NGSI
+
+location -up- sdk
+acceleration -up- sdk
+heading -up- sdk
+
+hide cosmos
+hide timeseries
+hide encryption
+hide cep
+hide ckan
+hide kurento
+hide iotse
+
+@enduml
