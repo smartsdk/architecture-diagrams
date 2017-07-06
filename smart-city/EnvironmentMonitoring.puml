@@ -6,6 +6,8 @@ skinparam componentStyle uml2
 !includeurl ICONURL/fiware.puml
 !includeurl ICONURL/smartsdk.puml
 
+
+
 package "Map Services" as mapservices {
 	SMARTSDK(mapengine,"Map Engine",component)
 }
@@ -21,6 +23,9 @@ package "Map Services" as mapservices {
 !includeurl BASEURL/data-management/Data-ContextManagement-SmartSDK-extension.puml
 !includeurl BASEURL/iot-management/IoT-Service-Enablement-SmartSDK-extension.puml
 
+Database "Environment" as env
+env -left- ctx
+
 hide encryption
 hide cep
 hide ckan
@@ -33,6 +38,7 @@ hide iot1
 hide iot2
 hide iotedge
 hide IETFCoAP
+
 
 
 mapengine -down- NGSI
