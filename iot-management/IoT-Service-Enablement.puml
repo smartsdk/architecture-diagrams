@@ -24,6 +24,8 @@ package "IoT Edge" as iotedge {
   NGSI -right- iote
 }
 
+
+
 interface MQTT
 interface IETFCoAP
 [IoT Device 1] as iot1
@@ -32,5 +34,7 @@ MQTT -up- idas
 [IoT Device 2] as iot2
 iot2 -up- IETFCoAP
 IETFCoAP -up- idas
+}
+
 
 @enduml
