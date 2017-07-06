@@ -11,26 +11,28 @@ interface NGSI
 
 package "IoT Service Enablement" as iotse {
 
-package "IoT Backend" as iotback {
-  FIWARE(idas,"Backend Device \n Management - IDAS",component)
-  FIWARE(iotd,"IoT Discovery",component)
-  FIWARE(iotb,"IoT Broker",component)
-  NGSI -down- idas
-  NGSI -down- iotd
-  NGSI -down- iotb
-}
-package "IoT Edge" as iotedge {
-  FIWARE(iote,"IoT Data Edge \n Consolidation GE - Cepheus",component)
-  NGSI -right- iote
-}
+  package "IoT Backend" as iotback {
+    FIWARE(idas,"Backend Device \n Management - IDAS",component)
+    FIWARE(iotd,"IoT Discovery",component)
+    FIWARE(iotb,"IoT Broker",component)
+    NGSI -down- idas
+    NGSI -down- iotd
+    NGSI -down- iotb
+  }
 
-interface MQTT
-interface IETFCoAP
-[IoT Device 1] as iot1
-iot1 -up- MQTT
-MQTT -up- idas
-[IoT Device 2] as iot2
-iot2 -up- IETFCoAP
-IETFCoAP -up- idas
+  package "IoT Edge" as iotedge {
+    FIWARE(iote,"IoT Data Edge \n Consolidation GE - Cepheus",component)
+    NGSI -right- iote
+  }
+
+  interface MQTT
+  interface IETFCoAP
+  [IoT Device 1] as iot1
+  iot1 -up- MQTT
+  MQTT -up- idas
+  [IoT Device 2] as iot2
+  iot2 -up- IETFCoAP
+  IETFCoAP -up- idas
+}
 
 @enduml
