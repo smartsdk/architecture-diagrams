@@ -4,26 +4,31 @@ skinparam componentStyle uml2
 !define BASEURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master
 !includeurl BASEURL/iot-management/IoT-Service-Enablement.puml
 
-SMARTSDK(cloudino,"Cloudino",component)
-SMARTSDK(smartspot,"Smart Spot",component)
-package "IoT Edge" {
-SMARTSDK(proximithings,"ProximiThings",component)
+package "IoT Service Enablement" as iotse {
+  SMARTSDK(cloudino,"Cloudino",component)
+  SMARTSDK(smartspot,"Smart Spot",component)
+
+  package "IoT Edge" {
+    SMARTSDK(proximithings,"ProximiThings",component)
+  }
+
+  interface LwM2M
+  proximithings -up- NGSI
+
+  smartspot -up- LwM2M
+  LwM2M -up- idas
+
+  cloud "CloudinoService"
+
+  cloudino -up- MQTT
+
+  cloudino -up- NGSI
+
+  cloudino -up- CloudinoService
+
+  CloudinoService -up- NGSI
 }
 
-proximithings -up- NGSI
 
-interface LwM2M
-smartspot -up- LwM2M
-LwM2M -up- idas
-
-cloud "CloudinoService"
-
-cloudino -up- MQTT
-
-cloudino -up- NGSI
-
-cloudino -up- CloudinoService
-
-CloudinoService -up- NGSI
 
 @enduml
