@@ -1,30 +1,20 @@
 @startuml;
 skinparam componentStyle uml2
 
-!define ICONURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master/dist
-!includeurl ICONURL/common.puml
-!includeurl ICONURL/fiware.puml
-!includeurl ICONURL/smartsdk.puml
-
-
-
-package "Map Services" as mapservices {
-	SMARTSDK(mapengine,"Map Engine",component)
-}
+!define BASEURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master
+!includeurl BASEURL/data-management/Data-ContextManagement-SmartSDK-extension.puml
+!includeurl BASEURL/iot-management/IoT-Service-Enablement-SmartSDK-extension.puml
 
 [Humidity Sensor] as hu1
 [Temperature Sensor] as temp1
 [GPS Sensor] as gps1
 
-[Humidity and Temperature Sensor] as hutemp2
+[Humidity and\nTemperature Sensor] as hutemp2
 [GPS Sensor] as gps2
+[Air Quality\nSensor] as aq
 
-!define BASEURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master
-!includeurl BASEURL/data-management/Data-ContextManagement-SmartSDK-extension.puml
-!includeurl BASEURL/iot-management/IoT-Service-Enablement-SmartSDK-extension.puml
-
-Database "Environment" as env
-env -left- ctx
+FIWARE(envdata,"Environment\nDatamodel",database)
+ctx -up- envdata
 
 hide encryption
 hide cep
@@ -38,10 +28,12 @@ hide iot1
 hide iot2
 hide iotedge
 hide IETFCoAP
+hide sdk
 
-
-
-mapengine -down- NGSI
+note right of smartspot
+  It can be deployed in a fixed location
+	or on a mobile location
+end note
 
 cloudino -down- hu1
 cloudino -down- temp1
@@ -49,5 +41,12 @@ cloudino -down- gps1
 
 smartspot -down- hutemp2
 smartspot -down- gps2
+smartspot -down- aq
+
+note right of aq
+  Monitors
+	NO2, CO2
+	CO and O3
+end note
 
 @enduml

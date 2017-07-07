@@ -1,0 +1,34 @@
+@startuml;
+skinparam componentStyle uml2
+
+!define ICONURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master/dist
+!includeurl ICONURL/common.puml
+!includeurl ICONURL/fiware.puml
+!includeurl ICONURL/smartsdk.puml
+
+package "SmartCity FrontEnd" as scfrontend {
+	SMARTSDK(userprofilegui,"User Profile GUI",component)
+	SMARTSDK(userrolegui,"User Role GUI",component)
+}
+
+package "SmartCity BackEnd" as scbackend {
+	SMARTSDK(userprofilemgt,"User Profile\nManagement",component)
+	SMARTSDK(userrolemgt,"User Role\nManagement",component)
+}
+
+SMARTSDK(userdata,"User Profile\nDatamodel",database)
+userprofilemgt -right- userdata
+
+interface Oauth
+
+FIWARE(keyrock,"Identity Manager (Keyrock)",component)
+
+userprofilegui -down- userprofilemgt
+userrolegui -down- userrolemgt
+
+keyrock -down- Oauth
+
+Oauth -down- scfrontend
+Oauth -down- scbackend
+
+@enduml

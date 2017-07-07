@@ -1,40 +1,54 @@
 @startuml;
 skinparam componentStyle uml2
 
-!define ICONURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master/dist
-!includeurl ICONURL/common.puml
-!includeurl ICONURL/fiware.puml
-!includeurl ICONURL/smartsdk.puml
+!define BASEURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master
+!includeurl BASEURL/data-management/Data-ContextManagement-SmartSDK-extension.puml
+!includeurl BASEURL/iot-management/IoT-Service-Enablement-SmartSDK-extension.puml
 
-package "Map Services" as mapservices {
-	SMARTSDK(mapengine,"Map Engine",component)
+package "SmartCity FrontEnd" as scfrontend {
+	SMARTSDK(transportschedulegui,"Public Transport\nSchedule GUI",component)
+	SMARTSDK(transportgui,"Public Transport GUI",component)
+	SMARTSDK(uservgui,"User Vehicle GUI",component)
 }
+
+package "SmartCity BackEnd" as scbackend {
+	SMARTSDK(transportschedulemgt,"Public Transport\nSchedule Management",component)
+	SMARTSDK(transportmgt,"Public Transport\nManagement",component)
+	SMARTSDK(uservmgt,"User Vehicle\nManagement",component)
+}
+
+transportschedulegui -down- transportschedulemgt
+transportgui -down- transportmgt
+uservgui -down- uservmgt
+
+transportschedulemgt -left- transportmgt
+
+transportschedulemgt -down- NGSI
+transportmgt -down- NGSI
+uservmgt -down- NGSI
 
 package "Routing Services" as routingservices {
-	SMARTSDK(routing,"Routing Engine",component)
-	SMARTSDK(publicrouter,"Public Transport Router",component)
-	SMARTSDK(pvtrouter,"Private Transport Router",component)
+	SMARTSDK(wrapper,"Routing Wrapper",component)
+	SMARTSDK(ptrouter,"Public Transport\nRouting Engine",component)
+	SMARTSDK(router,"Routing Engine",component)
 
-	routing -down- publicrouter
-	routing -down- pvtrouter
+	wrapper -down- ptrouter
+	wrapper -down- router
 }
 
-mapengine -left- routing
-
 Database GTFS as gtfs
-gtfs -up- publicrouter
+gtfs -up- ptrouter
 
 Database OSM as osm
-osm -up- pvtrouter
+osm -up- router
+
+FIWARE(transportdata,"Transportation\nDatamodel",database)
+ctx -up- transportdata
 
 
 [GPS Sensor] as gps1
 
 [GPS Sensor] as gps2
-
-!define BASEURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master
-!includeurl BASEURL/data-management/Data-ContextManagement-SmartSDK-extension.puml
-!includeurl BASEURL/iot-management/IoT-Service-Enablement-SmartSDK-extension.puml
 
 hide encryption
 hide cep
@@ -50,10 +64,7 @@ hide iotedge
 hide IETFCoAP
 hide ctxaddon
 
-
-mapengine -down- NGSI
-
-NGSI -right- routing
+NGSI -right- wrapper
 
 cloudino -down- gps1
 

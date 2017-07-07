@@ -1,12 +1,27 @@
 @startuml;
 skinparam componentStyle uml2
 
-!define ICONURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master/dist
-!includeurl ICONURL/common.puml
-!includeurl ICONURL/fiware.puml
-!includeurl ICONURL/smartsdk.puml
+!define BASEURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master
+!includeurl BASEURL/data-management/Data-ContextManagement-SmartSDK-extension.puml
+!includeurl BASEURL/iot-management/IoT-Service-Enablement-SmartSDK-extension.puml
 
-package "Mobile Alerts" as mobilealerts {
+package "SmartCity FrontEnd" as scfrontend {
+	SMARTSDK(eventsgui,"Events GUI",component)
+	SMARTSDK(notificationsgui,"Notifications GUI",component)
+}
+
+package "SmartCity BackEnd" as scbackend {
+	SMARTSDK(eventsmgt,"Events Management",component)
+	SMARTSDK(notificationsmgt,"Notifications Management",component)
+}
+
+
+notificationsgui -down- notificationsmgt
+eventsgui -down- eventsmgt
+notificationsmgt -down- NGSI
+eventsmgt -down- NGSI
+
+package "Mobile Alerts App" as mobilealerts {
 	SMARTSDK(alert,"Alert Application",component)
 }
 
@@ -14,11 +29,11 @@ package "Mobile Alerts" as mobilealerts {
 [Acceleration] as acceleration
 [Heading] as heading
 
-!define BASEURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master
-!includeurl BASEURL/data-management/Data-ContextManagement-SmartSDK-extension.puml
-!includeurl BASEURL/iot-management/IoT-Service-Enablement-SmartSDK-extension.puml
 
-alert -down- NGSI
+SMARTSDK(altertdata,"Alert\nDatamodel",database)
+ctx -left- altertdata
+
+alert -down- sdk
 
 location -up- sdk
 acceleration -up- sdk
