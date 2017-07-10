@@ -1,0 +1,73 @@
+@startuml;
+skinparam componentStyle uml2
+
+!define BASEURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master
+!includeurl BASEURL/data-management/Data-ContextManagement-SmartSDK-extension.puml
+!includeurl BASEURL/iot-management/IoT-Service-Enablement-SmartSDK-extension.puml
+
+package "SmartCity FrontEnd" as scfrontend {
+	SMARTSDK(transportschedulegui,"Public Transport\nSchedule GUI",component)
+	SMARTSDK(transportgui,"Public Transport GUI",component)
+	SMARTSDK(uservgui,"User Vehicle GUI",component)
+}
+
+package "SmartCity BackEnd" as scbackend {
+	SMARTSDK(transportschedulemgt,"Public Transport\nSchedule Management",component)
+	SMARTSDK(transportmgt,"Public Transport\nManagement",component)
+	SMARTSDK(uservmgt,"User Vehicle\nManagement",component)
+}
+
+transportschedulegui -down- transportschedulemgt
+transportgui -down- transportmgt
+uservgui -down- uservmgt
+
+transportschedulemgt -left- transportmgt
+
+transportschedulemgt -down- NGSI
+transportmgt -down- NGSI
+uservmgt -down- NGSI
+
+package "Routing Services" as routingservices {
+	SMARTSDK(wrapper,"Routing Wrapper",component)
+	SMARTSDK(ptrouter,"Public Transport\nRouting Engine",component)
+	SMARTSDK(router,"Routing Engine",component)
+
+	wrapper -down- ptrouter
+	wrapper -down- router
+}
+
+Database GTFS as gtfs
+gtfs -up- ptrouter
+
+Database OSM as osm
+osm -up- router
+
+FIWARE(transportdata,"Transportation\nDatamodel",database)
+ctx -up- transportdata
+
+
+[GPS Sensor] as gps1
+
+[GPS Sensor] as gps2
+
+hide encryption
+hide cep
+hide ckan
+hide kurento
+hide cosmos
+hide proximithings
+hide iotd
+hide iotb
+hide iot1
+hide iot2
+hide iotedge
+hide IETFCoAP
+hide ctxaddon
+
+NGSI -right- wrapper
+
+cloudino -down- gps1
+
+smartspot -down- gps2
+
+@enduml

@@ -1,0 +1,154 @@
+@startuml;
+skinparam componentStyle uml2
+
+!define BASEURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master
+!includeurl BASEURL/data-management/Data-ContextManagement-SmartSDK-extension.puml
+!includeurl BASEURL/iot-management/IoT-Service-Enablement-SmartSDK-extension.puml
+
+
+hide encryption
+hide cep
+hide ckan
+hide kurento
+hide proximithings
+hide iotd
+hide iotb
+hide iot1
+hide iot2
+hide iotedge
+hide IETFCoAP
+
+package "SmartCity FrontEnd" as scfrontend {
+	SMARTSDK(transportschedulegui,"Public Transport\nSchedule GUI",component)
+	SMARTSDK(transportgui,"Public Transport GUI",component)
+	SMARTSDK(uservgui,"User Vehicle GUI",component)
+	SMARTSDK(eventsgui,"Events GUI",component)
+	SMARTSDK(notificationsgui,"Notifications GUI",component)
+	SMARTSDK(userprofilegui,"User Profile GUI",component)
+	SMARTSDK(userhprofilegui,"User Health Profile GUI",component)
+	SMARTSDK(userrolegui,"User Role GUI",component)
+}
+
+package "SmartCity BackEnd" as scbackend {
+	SMARTSDK(transportschedulemgt,"Public Transport\nSchedule Management",component)
+	SMARTSDK(transportmgt,"Public Transport\nManagement",component)
+	SMARTSDK(uservmgt,"User Vehicle\nManagement",component)
+	SMARTSDK(eventsmgt,"Events Management",component)
+	SMARTSDK(notificationsmgt,"Notifications\nManagement",component)
+	SMARTSDK(userprofilemgt,"User Profile\nManagement",component)
+	SMARTSDK(userhprofilemgt,"User Health Profile\nManagement",component)
+	SMARTSDK(userrolemgt,"User Role\nManagement",component)
+}
+
+interface Oauth
+
+FIWARE(keyrock,"Identity Manager (Keyrock)",component)
+
+userprofilegui -down- userprofilemgt
+userhprofilegui -down- userhprofilemgt
+userrolegui -down- userrolemgt
+
+keyrock -down- Oauth
+
+Oauth -down- scfrontend
+Oauth -down- scbackend
+
+notificationsgui -down- notificationsmgt
+eventsgui -down- eventsmgt
+notificationsmgt -down- NGSI
+eventsmgt -down- NGSI
+
+package "Mobile Alerts App" as mobilealerts {
+	SMARTSDK(alert,"Alert Application",component)
+}
+
+[Location] as location
+[Acceleration] as acceleration
+[Heading] as heading
+
+
+SMARTSDK(altertdata,"Alert\nDatamodel",database)
+ctx -down- altertdata
+
+alert -left- sdk
+
+location -up- sdk
+acceleration -up- sdk
+heading -up- sdk
+
+transportschedulegui -down- transportschedulemgt
+transportgui -down- transportmgt
+uservgui -down- uservmgt
+
+transportschedulemgt -left- transportmgt
+
+transportschedulemgt -down- NGSI
+transportmgt -down- NGSI
+uservmgt -down- NGSI
+
+package "Routing Services" as routingservices {
+	SMARTSDK(wrapper,"Routing Wrapper",component)
+	SMARTSDK(ptrouter,"Public Transport\nRouting Engine",component)
+	SMARTSDK(router,"Routing Engine",component)
+
+	wrapper -down- ptrouter
+	wrapper -down- router
+}
+SMARTSDK(userdata,"User Profile\nDatamodel",database)
+userprofilemgt -right- userdata
+
+Database GTFS as gtfs
+gtfs -up- ptrouter
+
+Database OSM as osm
+osm -up- router
+
+FIWARE(transportdata,"Transportation\nDatamodel",database)
+ctx -down- transportdata
+
+[Humidity Sensor] as hu1
+[Temperature Sensor] as temp1
+[GPS Sensor] as gps1
+
+[Humidity and\nTemperature Sensor] as hutemp2
+[GPS Sensor] as gps2
+[Air Quality\nSensor] as aq
+
+FIWARE(envdata,"Environment\nDatamodel",database)
+ctx -down- envdata
+
+NGSI -right- wrapper
+
+note right of smartspot
+  It can be deployed in a fixed location
+	or on a mobile location
+end note
+
+cloudino -down- hu1
+cloudino -down- temp1
+cloudino -down- gps1
+
+smartspot -down- hutemp2
+smartspot -down- gps2
+smartspot -down- aq
+
+note right of aq
+  Monitors
+	NO2, CO2
+	CO and O3
+end note
+
+package "Data/Context Management Core" as ctxcore {
+note left of cosmos
+  To be integrated
+end note
+}
+
+package "Data/Context Management SmartSDK Add-Ons" as ctxaddon {
+note left of timeseries
+  It will replace
+	STH Comet
+end note
+}
+
+@enduml
