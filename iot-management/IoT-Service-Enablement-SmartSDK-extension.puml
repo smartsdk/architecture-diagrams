@@ -29,6 +29,4 @@ package "IoT Service Enablement" as iotse {
   CloudinoService -up- NGSI
 }
 
-
-
 @enduml
