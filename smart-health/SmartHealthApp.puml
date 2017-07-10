@@ -26,7 +26,9 @@ FIWARE(keyrock,"Identity Manager (Keyrock)",component)
 
 keyrock -down- Oauth
 
-
+FIWARE(pepproxy,"PEP Proxy",component)
+ctx -left- pepproxy
+pepproxy -up- Oauth
 
 
 package "Doctor Health App" as doctorapp {

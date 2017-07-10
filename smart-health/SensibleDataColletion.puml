@@ -36,6 +36,15 @@ location -up- sdk
 acceleration -up- sdk
 heading -up- sdk
 
+FIWARE(pepproxy,"PEP Proxy",component)
+ctx -left- pepproxy
+
+interface Oauth
+
+FIWARE(keyrock,"Identity Manager (Keyrock)",component)
+keyrock -down- Oauth
+pepproxy -up- Oauth
+
 package "Data/Context Management SmartSDK Add-Ons" as ctxaddon {
 note left of encryption
   To be integrated
