@@ -1,0 +1,74 @@
+@startuml;
+skinparam componentStyle uml2
+
+!define BASEURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master
+!includeurl BASEURL/data-management/Data-ContextManagement-SmartSDK-extension.puml
+!includeurl BASEURL/iot-management/IoT-Service-Enablement-SmartSDK-extension.puml
+
+hide sth
+hide cep
+hide ckan
+hide kurento
+hide timeseries
+hide proximithings
+hide iotd
+hide iotb
+hide iot1
+hide iot2
+hide iotse
+hide iotedge
+hide IETFCoAP
+
+
+interface Oauth
+
+FIWARE(keyrock,"Identity Manager (Keyrock)",component)
+
+keyrock -down- Oauth
+
+
+
+
+package "Doctor Health App" as doctorapp {
+	FIWARE(wirecloud,"Wire Cloud",component)
+	SMARTSDK(oHealthBrowser,"oHealth-Browser",component)
+	oHealthBrowser -up- wirecloud
+	SMARTSDK(bitfrost,"BitFrost",component)
+	SMARTSDK(theseus,"Theseus",component)
+	bda -left- theseus
+	theseus -up- oHealthBrowser
+	bitfrost -up- oHealthBrowser
+	oHealthBrowser -down- NGSI
+}
+
+package "User Mobile Health App" as userapp {
+	SMARTSDK(3ollinapp,"3Ollin Test Application",component)
+}
+
+Oauth -left- doctorapp
+Oauth -right- userapp
+
+SMARTSDK(ohcdata,"Open Health Context \nDatamodel",database)
+ctx -down- ohcdata
+
+encryption -right-sdk
+3ollinapp -down- sdk
+
+[Location] as location
+[Acceleration] as acceleration
+[Heading] as heading
+
+[Smart Watch] as smartwatch
+
+smartwatch -up- sdk
+location -up- sdk
+acceleration -up- sdk
+heading -up- sdk
+
+package "Data/Context Management SmartSDK Add-Ons" as ctxaddon {
+note left of encryption
+  To be integrated
+end note
+}
+
+@enduml
