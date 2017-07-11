@@ -60,7 +60,7 @@ matest -down- sdk
 [Acceleration] as acceleration
 [Heading] as heading
 
-[Smart Watch] as smartwatch
+[Smartwatch] as smartwatch
 
 smartwatch -up- sdk
 location -up- sdk
