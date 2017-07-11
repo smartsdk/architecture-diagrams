@@ -1,0 +1,66 @@
+@startuml;
+skinparam componentStyle uml2
+
+!define BASEURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master
+!includeurl BASEURL/data-management/Data-ContextManagement-SmartSDK-extension.puml
+!includeurl BASEURL/iot-management/IoT-Service-Enablement-SmartSDK-extension.puml
+
+
+package "SmartSecurity FrontEnd" as scfrontend {
+	SMARTSDK(notificationsgui,"Notifications GUI",component)
+}
+
+package "SmartSecurity BackEnd" as scbackend {
+	SMARTSDK(notificationsmgt,"Notifications Management",component)
+}
+
+
+notificationsgui -down- notificationsmgt
+notificationsmgt -down- NGSI
+
+package "Mobile Security App" as mobilealerts {
+	SMARTSDK(alert,"Alert Application",component)
+}
+
+[Location] as location
+[Video\n streaming] as vs
+
+SMARTSDK(altertdata,"Alert\nDatamodel",database)
+ctx -down- altertdata
+
+alert -down- sdk
+
+location -up- sdk
+vs -up- sdk
+
+[GPS\n Sensor] as gps1
+[Gyroscope\n Sensor] as gyro1
+[Accelerometer\n Sensor] as acc1
+
+[GPS\n Sensor] as gps2
+[Gyroscope\n Sensor] as gyro2
+[Accelerometer\n Sensor] as acc2
+
+hide IETFCoAP
+hide LwM2M
+hide proximithings
+hide smartspot
+
+
+sdk -down- gps1
+sdk -down- gyro1
+sdk -down- acc1
+
+cloudino -down- gps2
+cloudino -down- gyro2
+cloudino -down- acc2
+
+hide cosmos
+hide timeseries
+hide encryption
+hide cep
+hide ckan
+hide kurento
+hide iotse
+
+@enduml
