@@ -20,15 +20,15 @@ hide iotedge
 hide IETFCoAP
 hide ctxaddon
 
-package "Doctor Health App" as doctorapp {
-	FIWARE(wirecloud,"Wire Cloud",component)
+package "Health App" as doctorapp {
+	FIWARE(wirecloud,"Wirecloud",component)
 	SMARTSDK(oHealthBrowser,"oHealth-Browser",component)
 	oHealthBrowser -up- wirecloud
-	SMARTSDK(bitfrost,"BitFrost",component)
+	SMARTSDK(bifrost,"Bifrost",component)
 	SMARTSDK(theseus,"Theseus",component)
 	bda -left- theseus
 	theseus -up- oHealthBrowser
-	bitfrost -up- oHealthBrowser
+	bifrost -up- oHealthBrowser
 	oHealthBrowser -down- NGSI
 }
 
