@@ -31,20 +31,20 @@ ctx -left- pepproxy
 pepproxy -up- Oauth
 
 
-package "Doctor Health App" as doctorapp {
+package "Health App" as doctorapp {
 	FIWARE(wirecloud,"Wire Cloud",component)
 	SMARTSDK(oHealthBrowser,"oHealth-Browser",component)
 	oHealthBrowser -up- wirecloud
-	SMARTSDK(bitfrost,"BitFrost",component)
+	SMARTSDK(bifrost,"Bifrost",component)
 	SMARTSDK(theseus,"Theseus",component)
 	bda -left- theseus
 	theseus -up- oHealthBrowser
-	bitfrost -up- oHealthBrowser
+	bifrost -up- oHealthBrowser
 	oHealthBrowser -down- NGSI
 }
 
 package "User Mobile Health App" as userapp {
-	SMARTSDK(3ollinapp,"3Ollin Test Application",component)
+	SMARTSDK(matest,"MA-Test Application",component)
 }
 
 Oauth -left- doctorapp
@@ -54,7 +54,7 @@ SMARTSDK(ohcdata,"Open Health Context \nDatamodel",database)
 ctx -down- ohcdata
 
 encryption -right-sdk
-3ollinapp -down- sdk
+matest -down- sdk
 
 [Location] as location
 [Acceleration] as acceleration
