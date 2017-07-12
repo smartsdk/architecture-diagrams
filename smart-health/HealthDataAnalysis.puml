@@ -1,0 +1,38 @@
+@startuml;
+skinparam componentStyle uml2
+
+!define BASEURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master
+!includeurl BASEURL/data-management/Data-ContextManagement-SmartSDK-extension.puml
+!includeurl BASEURL/iot-management/IoT-Service-Enablement-SmartSDK-extension.puml
+
+hide sth
+hide cep
+hide ckan
+hide kurento
+hide timeseries
+hide proximithings
+hide iotd
+hide iotb
+hide iot1
+hide iot2
+hide iotse
+hide iotedge
+hide IETFCoAP
+hide ctxaddon
+
+package "Health App" as doctorapp {
+	FIWARE(wirecloud,"Wirecloud",component)
+	SMARTSDK(oHealthBrowser,"oHealth-Browser",component)
+	oHealthBrowser -up- wirecloud
+	SMARTSDK(bifrost,"Bifrost",component)
+	SMARTSDK(theseus,"Theseus",component)
+	bda -left- theseus
+	theseus -up- oHealthBrowser
+	bifrost -up- oHealthBrowser
+	oHealthBrowser -down- NGSI
+}
+
+SMARTSDK(ohcdata,"Open Health Context \nDatamodel",database)
+ctx -down- ohcdata
+
+@enduml
