@@ -1,0 +1,151 @@
+@startuml
+
+!define ICONURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master/dist
+!includeurl ICONURL/common.puml
+!includeurl ICONURL/fiware.puml
+!includeurl ICONURL/smartsdk.puml
+
+
+
+    package "FrontEnd Smart Security \n Application" as fessa{
+      rectangle "-" as r1{
+        [Home to user and \n managers] as htuam
+        [Register / Edit \n activities ] as rea
+        [Subscribe to \n notifications] as stn
+        [Register / Edit user \n profile] as reup
+        [View your \n generated events] as vyge
+      }
+    }
+
+
+    htuam -[hidden]right- rea
+    reup -[hidden]up- htuam
+    reup -[hidden]up- rea
+
+    rea -[hidden]right- vyge
+    stn -[hidden]up- rea
+    stn -[hidden]up-vyge
+
+    reup -[hidden]right- stn
+
+
+    package "BackEnd Smart Security \n Application" as bessa{
+      rectangle "-" as r{
+        [Home to user and \n managers] as htuam1
+        [Module to manage \n activities] as mtma
+        [Module to manage \n notifications] as mtmn
+        [Module to manage \n user profile] as mtmup
+        [Module to manage \n events] as mtme
+        [Module to manage \n detected activities] as mtmda
+      }
+      [Access Control] as ac
+      database "User and vehicle \n database" as uavd{
+      }
+    }
+
+    htuam1 -[hidden]right- mtmup
+    mtme -[hidden]up- htuam1
+
+    mtmup -[hidden]right- mtma
+    mtmda -[hidden]up- mtmup
+
+    mtmn -[hidden]up- mtmda
+
+
+    mtme -[hidden]right- mtmda
+    mtmda -[hidden]right- mtmn
+
+
+    mtmda <-down-> ac
+    mtmda -down- uavd
+
+    interface "Oauth 2 \n flow" as oadf
+    [Identity Manager \n (Keyrock)] as imkr
+
+
+    imkr-[hidden]up- oadf
+
+    oadf -- imkr
+
+    oadf-[hidden]up- rea
+    oadf-[hidden]up- stn
+    r1 -- oadf 
+
+    package "Alerts for \n Smart Security Scenario" as afsss{
+    [Mobile alert for \n vehicle detection and vehicle direction] as malerts
+    [Security risk event alert] as salerts
+        database "Alerts database" as ad
+    }
+    malerts -[hidden]right- salerts
+    ad -[hidden]-malerts
+    ad -[hidden]-salerts
+    malerts -- ad
+    salerts -- ad
+
+
+    package "Cosmos" as ctbd{
+      [Cygnus] as cygnus
+      [Big Data Analysis] as bdan
+    }
+    ctbd -[hidden]right- bessa
+    cygnus -- bdan
+    bessa --cygnus
+
+
+    package "Kurento" as kurento{
+    [Kurento Media Server] as kms
+    [Filters \n (in progress)] as kfilter
+    }
+    kurento -[hidden]right- ctbd
+    kms -- kfilter
+
+    package "SDK library for NGSI" as sdklfngsi{
+      [Mobile device \n (location, accelerometer, \n gyroscope)] as sensors
+      database "Mobile data context \n (current version)" as mdcd
+    }
+    sdklfngsi -[hidden]- ctbd
+    mdcd -[hidden]left- sensors
+
+
+    package "IoT Device" as iotd{
+    [Cameras \n (in progress)] as cam
+    }
+
+    package "IoT Mobile Device" as iotmd{
+      [GPS sensor \n (in progress)] as gpssip
+      [Accelerometer sensor \n (in progress)] as accs
+      [Gyroscope sensor \n (in progress)] as gyros
+    }
+
+    interface "https/rtsp" as httprtsp
+
+    httprtsp -[hidden]right- kms
+    httprtsp --- cam
+
+    [Context Broker \n Orion] as cbo
+    cbo -[hidden]left- mtmup
+
+    interface "<font size=35 color=red>NGSI" as ngsi
+
+    fessa -- bessa : "JSON"
+    bessa ---- ngsi
+    cbo ----- ngsi
+    ngsi -- kms
+    ngsi -- cygnus
+    ngsi -- malerts
+    ngsi -- salerts
+    ngsi -- sensors
+    kms --- httprtsp
+
+    package "IoT Backend" as iotb{
+      [Backend device management \n IDAS] as bedmi
+    }
+    bedmi -- gpssip
+    bedmi -- accs
+    bedmi -- gyros
+    bedmi ------ ngsi
+    bedmi -[hidden]left- iotd
+    
+
+
+@enduml

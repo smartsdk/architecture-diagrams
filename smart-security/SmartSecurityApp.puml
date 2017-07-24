@@ -1,0 +1,114 @@
+@startuml
+
+!define BASEURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master
+!includeurl BASEURL/data-management/Data-ContextManagement-SmartSDK-extension.puml
+!includeurl BASEURL/iot-management/IoT-Service-Enablement-SmartSDK-extension.puml
+
+
+
+package "SmartSecurity FrontEnd" as scfrontend {
+  SMARTSDK(eventsgui,"Events GUI",component)
+	SMARTSDK(notificationsgui,"Notifications GUI",component)
+  SMARTSDK(vgui,"Vehicle GUI",component)
+  SMARTSDK(userprofilegui,"User Profile GUI",component)
+  SMARTSDK(userrolegui,"User Role GUI",component)
+  SMARTSDK(actgui,"Activities GUI",component)
+}
+
+package "SmartSecurity BackEnd" as scbackend {
+	SMARTSDK(notificationsmgt,"Notifications Management",component)
+  SMARTSDK(eventsmgt,"Events Management",component)
+  SMARTSDK(secfilter,"Video Security Events\nDetection",component)
+  SMARTSDK(ev,"Sensor Security Events\nDetection",component)
+  SMARTSDK(vmgt,"Vehicle\nManagement",component)
+  SMARTSDK(userprofilemgt,"User Profile\nManagement",component)
+  SMARTSDK(userrolemgt,"User Role\nManagement",component)
+  SMARTSDK(actmgt,"Activities\nManagement",component)
+}
+
+interface Oauth
+
+FIWARE(keyrock,"Identity Manager (Keyrock)",component)
+
+keyrock -down- Oauth
+
+Oauth -down- scfrontend
+Oauth -down- scbackend
+
+userrolemgt -up- userrolegui
+userprofilegui -down- userprofilemgt
+vgui -down- vmgt
+actgui -down- actmgt
+
+notificationsgui -down- notificationsmgt
+eventsgui -down- eventsmgt
+notificationsmgt -down- NGSI
+eventsmgt -down- NGSI
+
+vmgt -down- NGSI
+
+package "Mobile Security App" as mobilealerts {
+	SMARTSDK(alert,"Alert Application",component)
+}
+
+[Location] as location
+[Video\n streaming] as vs
+
+SMARTSDK(altertdata,"Alert\nDatamodel",database)
+ctx -down- altertdata
+
+FIWARE(transportdata,"Transportation\nDatamodel",database)
+ctx -down- transportdata
+
+alert -down- sdk
+
+[Video \n Streaming] as vs
+
+location -up- sdk
+vs -up- sdk
+
+hide timeseries
+hide encryption
+hide cep
+hide ckan
+hide sth
+hide iotd
+hide iotb
+hide iot1
+hide iot2
+hide iotedge
+
+hide IETFCoAP
+hide LwM2M
+hide proximithings
+hide smartspot
+
+SMARTSDK(seceventdata,"Security Event\nDatamodel",database)
+ctx -down- seceventdata
+
+secfilter -left- kurento
+secfilter -right- eventsmgt
+ev  -down- NGSI
+
+interface RTSP
+
+vs -up- RTSP
+RTSP -up- kurento
+
+[GPS\n Sensor] as gps1
+[Gyroscope\n Sensor] as gyro1
+[Accelerometer\n Sensor] as acc1
+
+[GPS\n Sensor] as gps2
+[Gyroscope\n Sensor] as gyro2
+[Accelerometer\n Sensor] as acc2
+
+sdk -down- gps1
+sdk -down- gyro1
+sdk -down- acc1
+
+cloudino -down- gps2
+cloudino -down- gyro2
+cloudino -down- acc2
+
+@enduml
