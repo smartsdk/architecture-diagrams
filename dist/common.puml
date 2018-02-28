@@ -1,4 +1,4 @@
-@startuml
+@startuml;
 ' Creates an aliased entity with a colorized sprite and stereotype
 ' Params:
 '   e_type:     the entity type (e.g. component, node, agent, etc.)
