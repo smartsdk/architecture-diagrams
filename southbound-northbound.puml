@@ -1,8 +1,8 @@
 ¨@startuml;
 skinparam componentStyle uml2
 
-!define BASEURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master
-!includeurl BASEURL/data-management/Data-ContextManagement.puml
-!includeurl BASEURL/iot-management/IoT-Service-Enablement.puml
+!define BASEURL .
+!include BASEURL/data-management/Data-ContextManagement.puml
+!include BASEURL/iot-management/IoT-Service-Enablement.puml
 
 @enduml

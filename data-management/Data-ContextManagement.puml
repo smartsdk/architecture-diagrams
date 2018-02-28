@@ -9,11 +9,9 @@ skinparam componentStyle uml2
 package "Data/Context Management Core" as ctxcore {
 	interface NGSI
 	FIWARE(ctx,"Context Broker \n - Orion",component)
-	FIWARE(cep,"CEP \n - Proton",component)
 	FIWARE(ckan,"CKAN",component)
 	FIWARE(kurento,"Stream Oriented \n- Kurento",component)
 	NGSI -left- ctx
-	NGSI -up- cep
 	NGSI -up- ckan
 	NGSI -up- kurento
 	package "Cosmos" as cosmos {
