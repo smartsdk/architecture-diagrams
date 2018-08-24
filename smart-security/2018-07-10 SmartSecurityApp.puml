@@ -1,0 +1,75 @@
+@startuml
+skinparam componentStyle uml2
+!define BASEURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master
+!includeurl BASEURL/data-management/Data-ContextManagement-SmartSDK-extension.puml
+!define group group #transparent
+!define alt alt #transparent
+
+package "SmartSecurity FrontEnd" as scfrontend {
+  SMARTSDK(notificationsgui,"Events GUI",component)
+  SMARTSDK(userprofilegui,"User Profile GUI",component)
+  SMARTSDK(userrolegui,"User Role GUI",component)
+}
+
+package "SmartSecurity BackEnd" as scbackend {
+SMARTSDK(eventdetec,"Video Security Events \nDetection",component)
+SMARTSDK(actmgt,"Activities\nManagement",component)
+SMARTSDK(alertsmgt,"Events Management",component)
+SMARTSDK(userprofilemgt,"User Profile\nManagement",component)
+   
+actmgt -left- eventdetec
+alertsmgt -- actmgt
+userprofilemgt -left- alertsmgt
+userprofilemgt -up- userprofilegui
+}
+
+package "Security Mobile BackEnd" as smbackend {
+	SMARTSDK(eventsmgt,"Events Management",component)
+  SMARTSDK(ev,"Sensor Security Events\nDetection",component)
+  SMARTSDK(usersmgt,"Users Management",component)
+}
+
+package "Security Mobile FrontEnd" as smfrontend {
+	SMARTSDK(eventsgui,"Events GUI",component)
+  SMARTSDK(usersgui,"Users GUI",component)
+}
+
+
+[Video\n Streaming] as vs
+interface Oauth
+FIWARE(keyrock,"Identity Manager (Keyrock)",component)
+keyrock -down- Oauth
+Oauth -down- scfrontend
+Oauth -down- scbackend
+Oauth -- usersmgt
+scbackend -up- scfrontend
+eventsgui -- eventsmgt
+usersgui -- usersmgt
+
+interface RTSP
+vs -up- RTSP
+RTSP -up- kurento
+
+SMARTSDK(altertdata,"Security Alerts\nDatamodel",database)
+ctx -down- altertdata
+
+Database "Security \nCrateDB" as seccrate 
+timeseries -down- seccrate
+
+[GPS\n Sensor] as gps1
+[Accelerometer\n Sensor] as acc1
+
+ev -right- eventsmgt
+sdk -up- eventsmgt
+ev -down- gps1
+ev -down- acc1
+eventdetec -right- kurento
+NGSI -right- alertsmgt
+notificationsgui --NGSI
+
+remove cosmos
+remove ckan
+
+remove encryption
+
+@enduml

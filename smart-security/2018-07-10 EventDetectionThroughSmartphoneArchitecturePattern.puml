@@ -1,0 +1,42 @@
+@startuml;
+skinparam componentStyle uml2
+
+!define BASEURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master
+!includeurl BASEURL/data-management/Data-ContextManagement-SmartSDK-extension.puml
+
+package "SmartSecurity FrontEnd" as scfrontend {
+	SMARTSDK(eventsgui,"Events GUI",component)
+}
+
+package "Security Mobile BackEnd" as scbackend {
+	SMARTSDK(eventsmgt,"Events Management",component)
+  SMARTSDK(ev,"Sensor Security Events\nDetection",component)
+}
+
+package "Security Mobile FrontEnd" as smfrontend {
+	SMARTSDK(eventsguimob,"Events GUI",component)
+}
+
+[GPS\n Sensor] as gps1
+[Accelerometer\n Sensor] as acc1
+
+SMARTSDK(seceventdata,"Security Alerts\nDatamodel",database)
+ctx -down- seceventdata
+
+remove encryption
+remove ckan
+remove kurento
+remove cosmos
+
+Database "Security \nCrateDB" as seccrate 
+timeseries -down- seccrate
+
+sdk -up- eventsmgt
+ev -right- eventsmgt
+ev -down- gps1
+ev -down- acc1
+eventsguimob -- eventsmgt
+
+NGSI -up- eventsgui
+
+@enduml

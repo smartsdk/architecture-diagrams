@@ -1,0 +1,40 @@
+@startuml;
+skinparam componentStyle uml2
+
+!define BASEURL https://raw.githubusercontent.com/smartsdk/architecture-diagrams/master
+!includeurl BASEURL/data-management/Data-ContextManagement-SmartSDK-extension.puml
+
+[Video \n Streaming] as vs
+
+remove encryption
+remove sdk
+
+remove cosmos
+remove ckan
+
+package "SmartSecurity FrontEnd" as scfrontend {
+	SMARTSDK(eventsgui,"Events GUI",component)
+}
+
+package "SmartSecurity BackEnd" as scbackend {
+	SMARTSDK(eventsmgt,"Events Management",component)
+  SMARTSDK(secfilter,"Video Security Events\nDetection",component)
+}
+
+SMARTSDK(seceventdata,"Security Alerts\nDatamodel",database)
+ctx -down- seceventdata
+
+Database "Security \nCrateDB" as seccrate 
+timeseries -down- seccrate
+
+secfilter -left- kurento
+secfilter -right- eventsmgt
+eventsmgt -- NGSI
+NGSI -up- eventsgui
+
+interface RTSP
+
+vs -up- RTSP
+RTSP -left- kurento
+
+@enduml
